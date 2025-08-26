@@ -14,7 +14,172 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          subscription_end: string | null
+          subscription_status: string | null
+          subscription_tier: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id?: string
+          subscription_end?: string | null
+          subscription_status?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          subscription_end?: string | null
+          subscription_status?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quarantine: {
+        Row: {
+          file_size: number | null
+          id: string
+          original_path: string
+          quarantine_path: string
+          quarantined_at: string | null
+          restored_at: string | null
+          threat_id: string
+          user_id: string
+        }
+        Insert: {
+          file_size?: number | null
+          id?: string
+          original_path: string
+          quarantine_path: string
+          quarantined_at?: string | null
+          restored_at?: string | null
+          threat_id: string
+          user_id: string
+        }
+        Update: {
+          file_size?: number | null
+          id?: string
+          original_path?: string
+          quarantine_path?: string
+          quarantined_at?: string | null
+          restored_at?: string | null
+          threat_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quarantine_threat_id_fkey"
+            columns: ["threat_id"]
+            isOneToOne: false
+            referencedRelation: "threats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scans: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          files_scanned: number | null
+          id: string
+          scan_path: string | null
+          scan_type: string
+          started_at: string | null
+          status: string | null
+          threats_found: number | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          files_scanned?: number | null
+          id?: string
+          scan_path?: string | null
+          scan_type: string
+          started_at?: string | null
+          status?: string | null
+          threats_found?: number | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          files_scanned?: number | null
+          id?: string
+          scan_path?: string | null
+          scan_type?: string
+          started_at?: string | null
+          status?: string | null
+          threats_found?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      threats: {
+        Row: {
+          action_taken: string | null
+          detected_at: string | null
+          file_path: string
+          id: string
+          resolved_at: string | null
+          scan_id: string
+          severity: string | null
+          status: string | null
+          threat_name: string
+          threat_type: string
+          user_id: string
+        }
+        Insert: {
+          action_taken?: string | null
+          detected_at?: string | null
+          file_path: string
+          id?: string
+          resolved_at?: string | null
+          scan_id: string
+          severity?: string | null
+          status?: string | null
+          threat_name: string
+          threat_type: string
+          user_id: string
+        }
+        Update: {
+          action_taken?: string | null
+          detected_at?: string | null
+          file_path?: string
+          id?: string
+          resolved_at?: string | null
+          scan_id?: string
+          severity?: string | null
+          status?: string | null
+          threat_name?: string
+          threat_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "threats_scan_id_fkey"
+            columns: ["scan_id"]
+            isOneToOne: false
+            referencedRelation: "scans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
